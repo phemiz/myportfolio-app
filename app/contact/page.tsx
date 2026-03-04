@@ -1,6 +1,7 @@
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { personalInfo } from "@/lib/data";
+import { ContactForm } from "@/components/ContactForm";
 
 export default function ContactPage() {
     return (
@@ -89,56 +90,7 @@ export default function ContactPage() {
                     {/* Contact Form */}
                     <div className="bg-white/5 border border-white/10 rounded-2xl p-8">
                         <h2 className="text-2xl font-bold mb-6">Send a Message</h2>
-                        <form className="space-y-6">
-                            <div>
-                                <label htmlFor="name" className="block text-sm font-medium text-white/60 mb-2">
-                                    Name
-                                </label>
-                                <input
-                                    type="text"
-                                    id="name"
-                                    name="name"
-                                    required
-                                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder:text-white/30 focus:outline-none focus:border-white/30 transition-colors"
-                                    placeholder="Your name"
-                                />
-                            </div>
-                            <div>
-                                <label htmlFor="email" className="block text-sm font-medium text-white/60 mb-2">
-                                    Email
-                                </label>
-                                <input
-                                    type="email"
-                                    id="email"
-                                    name="email"
-                                    required
-                                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder:text-white/30 focus:outline-none focus:border-white/30 transition-colors"
-                                    placeholder="your@email.com"
-                                />
-                            </div>
-                            <div>
-                                <label htmlFor="message" className="block text-sm font-medium text-white/60 mb-2">
-                                    Message
-                                </label>
-                                <textarea
-                                    id="message"
-                                    name="message"
-                                    required
-                                    rows={5}
-                                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder:text-white/30 focus:outline-none focus:border-white/30 transition-colors resize-none"
-                                    placeholder="Tell me about your project..."
-                                />
-                            </div>
-                            <button
-                                type="submit"
-                                className="w-full py-4 bg-white text-black font-bold rounded-lg hover:bg-white/90 transition-colors"
-                            >
-                                Send Message
-                            </button>
-                            <p className="text-xs text-white/40 text-center">
-                                Note: This is a demo form. Please use the email link above for direct contact.
-                            </p>
-                        </form>
+                        <ContactForm />
                     </div>
                 </div>
             </div>

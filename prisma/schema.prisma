@@ -1,0 +1,39 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Project {
+  id          String   @id @default(uuid())
+  slug        String   @unique
+  title       String
+  shortDesc   String
+  fullDesc    String
+  status      String   // completed | in-progress | near-complete
+  techStack   String   // JSON string array
+  llmMetadata String?  // JSON string
+  githubUrl   String?
+  demoUrl     String?
+  images      String   // JSON string array
+  features    String?  // JSON string array
+  specs       String?  // JSON string array
+  readme      String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Admin {
+  id       String   @id @default(uuid())
+  username String   @unique
+  password String
+}
+
+model Settings {
+  id              String   @id @default(uuid())
+  scrollingText   String   // JSON string
+  stackTechnology String   // JSON string array
+  updatedAt       DateTime @updatedAt
+}

@@ -17,6 +17,7 @@ export interface Project {
     images: string[];
     features?: { title: string; desc: string }[];
     specs?: { label: string; value: string }[];
+    readme?: string;
 }
 
 export const projects: Project[] = [

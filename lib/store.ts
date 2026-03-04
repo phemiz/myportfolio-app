@@ -1,12 +1,6 @@
 import 'server-only';
-import fs from 'fs/promises';
-import path from 'path';
+import { prisma } from './prisma';
 import { Project } from './data';
-
-const DATA_DIR = path.join(process.cwd(), 'data');
-const PROJECTS_FILE = path.join(DATA_DIR, 'projects.json');
-const ADMIN_FILE = path.join(DATA_DIR, 'admin.json');
-const SETTINGS_FILE = path.join(DATA_DIR, 'settings.json');
 
 export interface Settings {
     scrollingText: {
@@ -20,52 +14,149 @@ export interface Settings {
 
 export async function getProjects(): Promise<Project[]> {
     try {
-        const data = await fs.readFile(PROJECTS_FILE, 'utf-8');
-        return JSON.parse(data);
+        const projects = await prisma.project.findMany({
+            orderBy: { createdAt: 'asc' }
+        });
+
+        return projects.map((p) => ({
+            id: p.id,
+            slug: p.slug,
+            title: p.title,
+            shortDesc: p.shortDesc,
+            fullDesc: p.fullDesc,
+            status: p.status as 'completed' | 'in-progress' | 'near-complete',
+            techStack: JSON.parse(p.techStack),
+            llmMetadata: p.llmMetadata ? JSON.parse(p.llmMetadata) : undefined,
+            githubUrl: p.githubUrl || undefined,
+            demoUrl: p.demoUrl || undefined,
+            images: JSON.parse(p.images),
+            features: p.features ? JSON.parse(p.features) : undefined,
+            specs: p.specs ? JSON.parse(p.specs) : undefined,
+            readme: p.readme || undefined,
+        }));
     } catch (error) {
+        console.error("Prisma Error loading projects", error);
         return [];
     }
 }
 
 export async function saveProjects(projects: Project[]) {
-    await fs.writeFile(PROJECTS_FILE, JSON.stringify(projects, null, 2));
+    // Current application logic overwrites all projects when saving.
+    // For a SQL database, upserting or replacing all is preferred.
+    // To minimize app disruption, we will delete all and recreate, or update existing.
+
+    // Efficiently sync projects via a transaction
+    await prisma.$transaction(async (tx) => {
+        // Find existing IDs to see what to delete
+        const existing = await tx.project.findMany({ select: { id: true } });
+        const existingIds = new Set(existing.map(e => e.id));
+        const incomingIds = new Set(projects.map(p => p.id));
+
+        const toDelete = Array.from(existingIds).filter(id => !incomingIds.has(id));
+
+        if (toDelete.length > 0) {
+            await tx.project.deleteMany({ where: { id: { in: toDelete } } });
+        }
+
+        for (const project of projects) {
+            const data = {
+                slug: project.slug,
+                title: project.title,
+                shortDesc: project.shortDesc,
+                fullDesc: project.fullDesc,
+                status: project.status,
+                techStack: JSON.stringify(project.techStack),
+                llmMetadata: project.llmMetadata ? JSON.stringify(project.llmMetadata) : null,
+                githubUrl: project.githubUrl,
+                demoUrl: project.demoUrl,
+                images: JSON.stringify(project.images),
+                features: project.features ? JSON.stringify(project.features) : null,
+                specs: project.specs ? JSON.stringify(project.specs) : null,
+                readme: project.readme,
+            };
+
+            await tx.project.upsert({
+                where: { id: project.id },
+                update: data,
+                create: {
+                    id: project.id,
+                    ...data
+                }
+            });
+        }
+    });
 }
 
 export async function getAdminCredentials() {
     try {
-        const data = await fs.readFile(ADMIN_FILE, 'utf-8');
-        return JSON.parse(data);
+        const admin = await prisma.admin.findFirst();
+        if (admin) {
+            return { username: admin.username, password: admin.password };
+        }
     } catch (error) {
-        return { username: 'admin', password: 'admin' };
+        console.error("Prisma error getting admin", error);
     }
+    return { username: 'admin', password: 'admin' };
 }
 
 export async function updateAdminCredentials(creds: { username: string; password: string }) {
-    await fs.writeFile(ADMIN_FILE, JSON.stringify(creds, null, 2));
+    const admin = await prisma.admin.findFirst();
+    if (admin) {
+        await prisma.admin.update({
+            where: { id: admin.id },
+            data: { username: creds.username, password: creds.password }
+        });
+    } else {
+        await prisma.admin.create({
+            data: { username: creds.username, password: creds.password }
+        });
+    }
 }
 
 export async function getSettings(): Promise<Settings> {
     try {
-        const data = await fs.readFile(SETTINGS_FILE, 'utf-8');
-        return JSON.parse(data);
+        const settings = await prisma.settings.findFirst();
+        if (settings) {
+            return {
+                scrollingText: JSON.parse(settings.scrollingText),
+                stackTechnology: JSON.parse(settings.stackTechnology)
+            };
+        }
     } catch (error) {
-        // Return default settings if file doesn't exist
-        return {
-            scrollingText: {
-                section0: { heading: "Code Unbound.", description: "" },
-                section30: { heading: "Modular System Architecture.", description: "Engineered for infinite scalability." },
-                section60: { heading: "Precision Logic, Pure Intelligence.", description: "Every component calibrated for performance." },
-                section90: { heading: "Experience the Future.", description: "" }
-            },
-            stackTechnology: [
-                "React", "Next.js", "TypeScript", "Python", "FastAPI",
-                "PostgreSQL", "OpenAI", "LangChain", "Framer Motion", "Tailwind CSS",
-                "Node.js", "Docker", "AWS", "Firebase", "Git"
-            ]
-        };
+        console.error("Prisma error getting settings", error);
     }
+
+    // Return default settings if no DB record
+    return {
+        scrollingText: {
+            section0: { heading: "Code Unbound.", description: "" },
+            section30: { heading: "Modular System Architecture.", description: "Engineered for infinite scalability." },
+            section60: { heading: "Precision Logic, Pure Intelligence.", description: "Every component calibrated for performance." },
+            section90: { heading: "Experience the Future.", description: "" }
+        },
+        stackTechnology: [
+            "React", "Next.js", "TypeScript", "Python", "FastAPI",
+            "PostgreSQL", "OpenAI", "LangChain", "Framer Motion", "Tailwind CSS",
+            "Node.js", "Docker", "AWS", "Firebase", "Git"
+        ]
+    };
 }
 
 export async function updateSettings(settings: Settings) {
-    await fs.writeFile(SETTINGS_FILE, JSON.stringify(settings, null, 2));
+    const record = await prisma.settings.findFirst();
+    const data = {
+        scrollingText: JSON.stringify(settings.scrollingText),
+        stackTechnology: JSON.stringify(settings.stackTechnology)
+    };
+
+    if (record) {
+        await prisma.settings.update({
+            where: { id: record.id },
+            data
+        });
+    } else {
+        await prisma.settings.create({
+            data
+        });
+    }
 }

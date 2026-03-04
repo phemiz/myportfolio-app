@@ -10,6 +10,34 @@ interface ProjectPageProps {
     }
 }
 
+import { Metadata } from "next";
+
+// Generate dynamic metadata for the project
+export async function generateMetadata({ params }: ProjectPageProps): Promise<Metadata> {
+    const projects = await getProjects();
+    const project = projects.find((p) => p.slug === params.slug);
+
+    if (!project) {
+        return { title: "Project Not Found" };
+    }
+
+    return {
+        title: `${project.title} | Phemis Portfolio`,
+        description: project.shortDesc || project.fullDesc?.substring(0, 160),
+        openGraph: {
+            title: project.title,
+            description: project.shortDesc,
+            images: project.images && project.images.length > 0 ? [project.images[0]] : [],
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: project.title,
+            description: project.shortDesc,
+            images: project.images && project.images.length > 0 ? [project.images[0]] : [],
+        },
+    };
+}
+
 // Generate static params for all projects
 export async function generateStaticParams() {
     const projects = await getProjects();

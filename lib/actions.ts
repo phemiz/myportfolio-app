@@ -3,6 +3,7 @@
 import { redirect } from 'next/navigation';
 import fs from 'fs/promises';
 import path from 'path';
+import { put } from '@vercel/blob';
 import { getAdminCredentials, getProjects, saveProjects, updateAdminCredentials, updateSettings, Settings } from './store';
 import { login as authLogin, logout as authLogout } from './auth';
 import { Project } from './data';
@@ -79,15 +80,9 @@ export async function addProjectAction(formData: FormData) {
 
     if (imageFile && imageFile.size > 0) {
         try {
-            const buffer = Buffer.from(await imageFile.arrayBuffer());
             const fileName = `${formData.get('slug')}-${Date.now()}-${imageFile.name}`;
-            const uploadDir = path.join(process.cwd(), 'public', 'projects');
-
-            // Ensure directory exists
-            await fs.mkdir(uploadDir, { recursive: true });
-
-            await fs.writeFile(path.join(uploadDir, fileName), buffer);
-            imagePath = `/projects/${fileName}`;
+            const blob = await put(`projects/${fileName}`, imageFile, { access: 'public' });
+            imagePath = blob.url;
         } catch (error) {
             console.error('Image upload failed:', error);
         }
@@ -260,15 +255,9 @@ export async function updateProjectAction(id: string, formData: FormData) {
 
     if (imageFile && imageFile.size > 0) {
         try {
-            const buffer = Buffer.from(await imageFile.arrayBuffer());
             const fileName = `${formData.get('slug')}-${Date.now()}-${imageFile.name}`;
-            const uploadDir = path.join(process.cwd(), 'public', 'projects');
-
-            // Ensure directory exists
-            await fs.mkdir(uploadDir, { recursive: true });
-
-            await fs.writeFile(path.join(uploadDir, fileName), buffer);
-            imagePath = `/projects/${fileName}`;
+            const blob = await put(`projects/${fileName}`, imageFile, { access: 'public' });
+            imagePath = blob.url;
         } catch (error) {
             console.error('Image upload failed:', error);
         }
@@ -289,4 +278,36 @@ export async function updateProjectAction(id: string, formData: FormData) {
     projects[existingProjectIndex] = updatedProject;
     await saveProjects(projects);
     redirect('/admin');
+}
+
+export async function sendEmailAction(prevState: any, formData: FormData) {
+    const name = formData.get("name") as string;
+    const email = formData.get("email") as string;
+    const message = formData.get("message") as string;
+
+    if (!name || !email || !message) {
+        return { success: false, error: "Please fill in all fields" };
+    }
+
+    try {
+        // Here you would typically integrate with Resend, SendGrid, etc.
+        // For example with Resend:
+        // await resend.emails.send({
+        //     from: "Acme <onboarding@resend.dev>",
+        //     to: ["your-email@example.com"],
+        //     subject: `New contact from ${name}`,
+        //     text: message,
+        //     reply_to: email,
+        // });
+
+        console.log(`New incoming message from ${name} (${email}):\n${message}`);
+
+        // Simulating network delay
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+
+        return { success: true, error: "" };
+    } catch (error) {
+        console.error("Failed to send email:", error);
+        return { success: false, error: "Failed to send message. Please try again." };
+    }
 }
