@@ -1,3 +1,13 @@
 node_modules
+.next
+Out
+/build/
+.env
+.env.*
+dev.db
+*.db
+*.db-journal
+*.log
+.vercel
 
 /lib/generated/prisma

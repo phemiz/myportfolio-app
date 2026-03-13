@@ -1,1 +1,0 @@
-self.__REACT_LOADABLE_MANIFEST='{"app\\\\admin\\\\projects\\\\add\\\\page.tsx -> @/lib/actions":{"id":4763,"files":[]}}';
