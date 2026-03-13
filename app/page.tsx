@@ -4,6 +4,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ProjectCard } from "@/components/ProjectCard";
 import { TechStackRow } from "@/components/TechStackRow";
+import { ServicesSection } from "@/components/ServicesSection";
 import { getProjects, getSettings } from "@/lib/store";
 
 export default async function Home() {
@@ -38,6 +39,9 @@ export default async function Home() {
                     </Link>
                 </div>
             </section>
+
+            {/* Services / Expertise */}
+            <ServicesSection />
 
             {/* Tech Stack Marquee */}
             <section className="relative z-10 py-12">

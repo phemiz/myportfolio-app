@@ -18,9 +18,10 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
         <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: index * 0.1 }}
-            className="group relative rounded-2xl border border-white/10 bg-white/5 overflow-hidden hover:bg-white/10 transition-colors"
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ delay: index * 0.1, duration: 0.5 }}
+            whileHover={{ y: -8, scale: 1.01 }}
+            className="group relative rounded-2xl border border-white/10 bg-white/5 overflow-hidden hover:bg-white/10 transition-all duration-300 shadow-lg hover:shadow-white/5 hover:border-white/20"
         >
             <div className={`aspect-video w-full bg-black/50 relative overflow-hidden transition-all duration-300 ${isCollapsed ? 'h-24' : ''}`}>
                 {/* Image Placeholder or Actual Image */}

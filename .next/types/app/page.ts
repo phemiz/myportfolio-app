@@ -1,4 +1,4 @@
-// File: C:\Users\Hp\@@Cursor AI Project\@@ PROJECT  FILES\Portfolio\app\page.tsx
+// File: C:\Users\Hp\@@Cursor AI Project\@@ PROJECT  FILES\MyPortfolio\app\page.tsx
 import * as entry from '../../../app/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
