@@ -1,25 +1,45 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { updateSession } from './lib/auth';
+import { verifyToken } from './lib/auth';
 
 export async function middleware(request: NextRequest) {
-    const session = request.cookies.get('session');
+    const { pathname } = request.nextUrl;
+    const token = request.cookies.get('auth_token')?.value;
 
-    // Protect /admin routes
-    if (request.nextUrl.pathname.startsWith('/admin') && !request.nextUrl.pathname.startsWith('/admin/login')) {
-        if (!session) {
-            return NextResponse.redirect(new URL('/admin/login', request.url));
+    // 1. Check if user is logged in
+    const isValidToken = token ? await verifyToken(token) : null;
+
+    // 2. Protect /dashboard and /admin
+    if (pathname.startsWith('/dashboard') || pathname.startsWith('/admin')) {
+        // Exclude the login page itself from protection to avoid loops
+        if (!pathname.startsWith('/admin/login') && !pathname.startsWith('/login')) {
+            if (!isValidToken) {
+                // Redirect to login if token is missing or invalid
+                // Note: User requested redirect to /login
+                return NextResponse.redirect(new URL('/login', request.url));
+            }
         }
     }
 
-    // Redirect to dashboard if logged in and visiting login
-    if (request.nextUrl.pathname.startsWith('/admin/login') && session) {
-        return NextResponse.redirect(new URL('/admin', request.url));
+    // 3. Redirect logged-in users away from /login or /admin/login to /dashboard
+    if (pathname === '/login' || pathname === '/admin/login') {
+        if (isValidToken) {
+            return NextResponse.redirect(new URL('/dashboard', request.url));
+        }
     }
 
-    return await updateSession(request);
+    return NextResponse.next();
 }
 
 export const config = {
-    matcher: '/admin/:path*',
+    matcher: [
+        /*
+         * Match all request paths except for the ones starting with:
+         * - api (API routes)
+         * - _next/static (static files)
+         * - _next/image (image optimization files)
+         * - favicon.ico (favicon file)
+         */
+        '/((?!api|_next/static|_next/image|favicon.ico).*)',
+    ],
 };

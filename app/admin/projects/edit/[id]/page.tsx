@@ -1,4 +1,4 @@
-import { getProjects } from "@/lib/store";
+import { getProjects } from "@/lib/db-utils";
 import { updateProjectAction } from "@/lib/actions";
 import Link from "next/link";
 import Image from "next/image";

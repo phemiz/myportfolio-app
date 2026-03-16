@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
-import { getProjects } from "@/lib/store";
+import { getProjects } from "@/lib/db-utils";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 

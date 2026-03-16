@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { getProjects } from '@/lib/store';
+import { getProjects } from '@/lib/db-utils';
 import { deleteProjectAction } from '@/lib/actions';
 
 export default async function AdminDashboard() {

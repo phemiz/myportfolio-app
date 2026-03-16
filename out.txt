@@ -1,0 +1,1 @@
+Error: Using engine type \"client\" requires either \"adapter\" or \"accelerateUrl\" to be provided to PrismaClient constructor.\nRead more at https://pris.ly/d/client-constructor\n    at vm (C:\\Users\\Hp\\@@Cursor AI Project\\@@ PROJECT  FILES\\MyPortfolio\\node_modules\\@prisma\\client\\runtime\\

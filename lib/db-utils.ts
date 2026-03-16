@@ -18,7 +18,7 @@ export async function getProjects(): Promise<Project[]> {
             orderBy: { createdAt: 'asc' }
         });
 
-        return projects.map((p) => ({
+        return projects.map((p: any) => ({
             id: p.id,
             slug: p.slug,
             title: p.title,
@@ -41,18 +41,12 @@ export async function getProjects(): Promise<Project[]> {
 }
 
 export async function saveProjects(projects: Project[]) {
-    // Current application logic overwrites all projects when saving.
-    // For a SQL database, upserting or replacing all is preferred.
-    // To minimize app disruption, we will delete all and recreate, or update existing.
-
-    // Efficiently sync projects via a transaction
-    await prisma.$transaction(async (tx) => {
-        // Find existing IDs to see what to delete
+    await prisma.$transaction(async (tx: any) => {
         const existing = await tx.project.findMany({ select: { id: true } });
-        const existingIds = new Set(existing.map(e => e.id));
-        const incomingIds = new Set(projects.map(p => p.id));
+        const existingIds = new Set(existing.map((e: any) => e.id));
+        const incomingIds = new Set(projects.map((p: any) => p.id));
 
-        const toDelete = Array.from(existingIds).filter(id => !incomingIds.has(id));
+        const toDelete = Array.from(existingIds).filter((id: any) => !incomingIds.has(id));
 
         if (toDelete.length > 0) {
             await tx.project.deleteMany({ where: { id: { in: toDelete } } });
@@ -126,7 +120,6 @@ export async function getSettings(): Promise<Settings> {
         console.error("Prisma error getting settings", error);
     }
 
-    // Return default settings if no DB record
     return {
         scrollingText: {
             section0: { heading: "Code Unbound.", description: "" },

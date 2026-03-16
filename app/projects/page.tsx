@@ -1,5 +1,5 @@
 import { ProjectCard } from "@/components/ProjectCard";
-import { getProjects } from "@/lib/store";
+import { getProjects } from "@/lib/db-utils";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 

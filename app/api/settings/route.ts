@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getSettings } from '@/lib/store';
+import { getSettings } from '@/lib/db-utils';
 
 export async function GET() {
     const settings = await getSettings();

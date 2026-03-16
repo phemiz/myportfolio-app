@@ -5,7 +5,7 @@ import { Footer } from "@/components/Footer";
 import { ProjectCard } from "@/components/ProjectCard";
 import { TechStackRow } from "@/components/TechStackRow";
 import { ServicesSection } from "@/components/ServicesSection";
-import { getProjects, getSettings } from "@/lib/store";
+import { getProjects, getSettings } from "@/lib/db-utils";
 
 export default async function Home() {
     // Select top 3 projects for the home page
