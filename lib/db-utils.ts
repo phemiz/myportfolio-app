@@ -1,4 +1,3 @@
-import 'server-only';
 import { prisma } from './prisma';
 import { Project } from './data';
 
@@ -15,7 +14,7 @@ export interface Settings {
 export async function getProjects(): Promise<Project[]> {
     try {
         const projects = await prisma.project.findMany({
-            orderBy: { createdAt: 'asc' }
+            orderBy: { createdAt: 'desc' }
         });
 
         return projects.map((p: any) => ({

@@ -121,5 +121,451 @@
     ],
     "features": [],
     "specs": []
+  },
+  {
+    "id": "cyber-001",
+    "slug": "automated-patch-management",
+    "title": "Automated Patch Management",
+    "shortDesc": "Enterprise-grade patch management deployment and evaluation.",
+    "fullDesc": "A technical evaluation and deployment of enterprise patch management solutions including Action1 and ManageEngine Patch Manager Plus. Covered the automated identification, deployment, and verification of security patches across heterogeneous environments (Windows/Linux) to mitigate high-severity vulnerabilities like PHP 8.2.24 and VMware Workstation exploits.",
+    "status": "completed",
+    "techStack": [
+      "Action1",
+      "ManageEngine",
+      "Patch Management",
+      "Vulnerability Remediation",
+      "Cybersecurity",
+      "SOC"
+    ],
+    "githubUrl": "https://github.com/phemiz/automated-patch-management",
+    "images": ["/projects/automated-patch-management-1775291253360.png"],
+    "features": [
+      {
+        "title": "Vulnerability Assessment",
+        "desc": "Real-time scanning and prioritization of missing security patches based on CVSS scores."
+      },
+      {
+        "title": "Automated Deployment",
+        "desc": "Configuration of silent deployment polices for critical software and OS updates."
+      },
+      {
+        "title": "Compliance Reporting",
+        "desc": "Generation of detailed reports for security audits and stakeholder review."
+      }
+    ]
+  },
+  {
+    "id": "cyber-002",
+    "slug": "it-asset-inventory-system",
+    "title": "IT Asset Inventory System",
+    "shortDesc": "Network-wide asset discovery and configuration management.",
+    "fullDesc": "Implementation of an IT Asset Inventory System using Spiceworks and Lansweeper. Orchestrated the deployment of SQL Server Express/SSMS for on-premise inventory tracking, enabling full visibility into hardware specifications, software licenses, and network topology for security monitoring and asset lifecycle management.",
+    "status": "completed",
+    "techStack": [
+      "Lansweeper",
+      "Spiceworks",
+      "SQL Server Express",
+      "Asset Discovery",
+      "Security Monitoring",
+      "ITAM"
+    ],
+    "githubUrl": "https://github.com/phemiz/it-asset-inventory-system",
+    "images": [],
+    "features": [
+      {
+        "title": "Agentless Scanning",
+        "desc": "Network-based discovery of IP devices, servers, and workstations without client installation."
+      },
+      {
+        "title": "Database Integration",
+        "desc": "Structured storage of inventory data using SQL Server for complex querying and reporting."
+      },
+      {
+        "title": "License Compliance",
+        "desc": "Monitoring of software installations against license counts to prevent auditing risks."
+      }
+    ]
+  },
+  {
+    "id": "cyber-003",
+    "slug": "malware-analysis-forensics",
+    "title": "Malware Analysis & Forensics",
+    "shortDesc": "Deep-dive investigation of malicious documents and VBA macros.",
+    "fullDesc": "A series of laboratory-based malware investigations focusing on static and dynamic analysis of malicious files. Analyzed RTF exploits (CVE-2017-11882) and malicious VBA macros using specialized tools like oletools, CyberChef, and isolated sandboxes. Successfully extracted C2 URLs and identified obfuscation techniques used by attackers.",
+    "status": "completed",
+    "techStack": [
+      "oletools",
+      "CyberChef",
+      "Static Analysis",
+      "Malware Forensics",
+      "Sandbox Investigation",
+      "Cybersecurity"
+    ],
+    "githubUrl": "https://github.com/phemiz/malware-analysis-forensics",
+    "images": ["/projects/malware-analysis-forensics-1775291339477.png"],
+    "features": [
+      {
+        "title": "VBA Macro De-obfuscation",
+        "desc": "Reverse-engineering complex macro logic to reveal hidden payloads and shellcode."
+      },
+      {
+        "title": "C2 Infrastructure Mapping",
+        "desc": "Extraction of Command & Control IP addresses and domains from malicious binaries."
+      },
+      {
+        "title": "Isolated Analysis",
+        "desc": "Conducted all investigations within hardened VMware/Kali Linux sandboxes to prevent infection."
+      }
+    ]
+  },
+  {
+    "id": "cyber-004",
+    "slug": "ransomware-incident-response",
+    "title": "Ransomware Incident Response",
+    "shortDesc": "Investigation and containment of an Avaddon ransomware alert.",
+    "fullDesc": "Comprehensive SOC investigation (SOC145) centered on the detection and containment of Avaddon ransomware. Executed a full incident response playbook including log analysis, memory forensics via ANY.RUN/Hybrid Analysis, and the identification of post-exploitation activities like shadow copy deletion and UAC modification.",
+    "status": "completed",
+    "techStack": [
+      "SOC",
+      "Incident Response",
+      "ANY.RUN",
+      "VirusTotal",
+      "Hybrid Analysis",
+      "Ransomware"
+    ],
+    "githubUrl": "https://github.com/phemiz/ransomware-incident-response",
+    "images": [],
+    "features": [
+      {
+        "title": "Log Correlation",
+        "desc": "Analyzed endpoint and network logs to reconstruct the attack timeline and initial access."
+      },
+      {
+        "title": "Containment & Remediation",
+        "desc": "Identified and quarantined malicious binaries (ab.bin.exe) and blocked associated C2 IPs."
+      },
+      {
+        "title": "Threat Intelligence",
+        "desc": "Integrated IOCs (Hashes, IPs, Domains) into SIEM/EDR rules for proactive defense."
+      }
+    ]
+  },
+  {
+    "id": "cyber-005",
+    "slug": "endpoint-security-compliance",
+    "title": "Endpoint Security & Compliance",
+    "shortDesc": "Deployment of OPSWAT MetaDefender IT Access policies.",
+    "fullDesc": "Establishment of an enterprise-level endpoint security and compliance framework using OPSWAT MetaDefender IT Access. Configured custom security playbooks, application control policies, and automated compliance checks (antivirus state, encryption, system clock sync) across Windows, Linux, and Mobile devices.",
+    "status": "completed",
+    "techStack": [
+      "OPSWAT",
+      "MetaDefender",
+      "Endpoint Security",
+      "Compliance Enforcement",
+      "Cybersecurity"
+    ],
+    "githubUrl": "https://github.com/phemiz/endpoint-security-compliance",
+    "images": [],
+    "features": [
+      {
+        "title": "Custom Playbooks",
+        "desc": "Visual automation of security checks including process monitoring and registry validation."
+      },
+      {
+        "title": "Application Control",
+        "desc": "Defined allow/block lists for high-risk application categories (P2P, Toolbars, PUAs)."
+      },
+      {
+        "title": "Multi-Layer Compliance",
+        "desc": "Ensured all endpoints meet strict security standards before gaining network access."
+      }
+    ]
+  },
+  {
+    "id": "cyber-006",
+    "slug": "phishing-email-forensics",
+    "title": "Phishing Email Forensics",
+    "shortDesc": "Technical analysis of advanced phishing campaigns.",
+    "fullDesc": "A multi-case study in phishing forensics, investigating suspicious emails using header analysis and attachment inspection. Leveraged tools like Mozilla Thunderbird, MXToolbox, and PhishTool to trace originating IPs, analyze SafeLinks redirects, and decode Base64-encoded HTML templates used in credential harvesting.",
+    "status": "completed",
+    "techStack": [
+      "PhishTool",
+      "MXToolbox",
+      "Email Forensics",
+      "Header Analysis",
+      "Cybersecurity",
+      "SOC"
+    ],
+    "githubUrl": "https://github.com/phemiz/phishing-email-forensics",
+    "images": [],
+    "features": [
+      {
+        "title": "Header Analysis",
+        "desc": "Tracing the true origin of emails through ‘Received’ hops and SPF/DKIM/DMARC validation"
+      },
+      {
+        "title": "Malicious Link Decryption",
+        "desc": "De-obfuscating protective redirects (SafeLinks) to reveal hidden phishing targets"
+      },
+      {
+        "title": "Artifact Extraction",
+        "desc": "Safe extraction and hashing of malicious attachments for forensic investigation"
+      }
+    ]
+  },
+  {
+    "id": "cyber-007",
+    "slug": "mobile-app-security-assessment",
+    "title": "Mobile App Security Assessment",
+    "shortDesc": "Automated and manual security testing of Android/iOS applications.",
+    "fullDesc": "Comprehensive security assessment of mobile applications using MobSF, Yaazhini, and AppSweep. Performed static and dynamic analysis to identify hardcoded credentials, insecure data storage, and weak cryptographic implementations. Evaluated APK/IPA files against OWASP Mobile Top 10 vulnerabilities.",
+    "status": "completed",
+    "techStack": [
+      "MobSF",
+      "Yaazhini",
+      "AppSweep",
+      "Static Analysis",
+      "Mobile Security",
+      "OWASP Mobile"
+    ],
+    "githubUrl": "https://github.com/phemiz/mobile-app-security-assessment",
+    "images": ["/projects/mobile-app-sec.png"],
+    "features": [
+      {
+        "title": "Automated Scanning",
+        "desc": "Orchestrates multi-tool scans to identify vulnerabilities in binary code and manifest files."
+      },
+      {
+        "title": "Credential Extraction",
+        "desc": "Detection of sensitive hardcoded strings and API keys within the application source."
+      },
+      {
+        "title": "Compliance Check",
+        "desc": "Verifies application security posture against enterprise standards and regulatory requirements."
+      }
+    ]
+  },
+  {
+    "id": "cyber-008",
+    "slug": "waf-deployment-web-protection",
+    "title": "WAF Deployment & Web Protection",
+    "shortDesc": "Implementation of SafeLine WAF to mitigate OWASP Top 10 web attacks.",
+    "fullDesc": "Deployment and configuration of SafeLine Web Application Firewall (WAF) to protect vulnerable web applications (DVWA). Implemented protective rules against SQL Injection, XSS, and Brute Force attacks. Conducted security testing using Nikto, Hydra, and Burp Suite to validate WAF effectiveness and rule tuning.",
+    "status": "completed",
+    "techStack": [
+      "SafeLine WAF",
+      "DVWA",
+      "Nikto",
+      "Hydra",
+      "Web Security",
+      "Attacker Emulation"
+    ],
+    "githubUrl": "https://github.com/phemiz/waf-deployment-web-protection",
+    "images": ["/projects/waf-deployment.png"],
+    "features": [
+      {
+        "title": "Protective Rule Tuning",
+        "desc": "Configuration of custom WAF rules to block malicious payloads while maintaining low false-positives"
+      },
+      {
+        "title": "Attack Emulation",
+        "desc": "Systematic testing of defenses using Hydra for brute force and Nikto for vulnerability scanning"
+      },
+      {
+        "title": "Real-time Incident Monitoring",
+        "desc": "Dashboard visualization of blocked attacks and source IP reputation analysis"
+      }
+    ]
+  },
+  {
+    "id": "cyber-009",
+    "slug": "soc-incident-authentication-anomaly",
+    "title": "SOC Analysis: Authentication Anomaly",
+    "shortDesc": "Investigation of VPN brute-force and Check Point file-read vulnerabilities.",
+    "fullDesc": "Technical investigation of a 'SOC210' alert involving possible brute-force detected on a VPN gateway. Correlated failed login attempts with successful authentication from suspicious data-center IPs. Additionally analyzed CVE-2024-24919 (Check Point Security Gateway Arbitrary File Read) to understand its impact on remote access infrastructure.",
+    "status": "completed",
+    "techStack": [
+      "LetsDefend",
+      "SIEM",
+      "Log Analysis",
+      "CVE Investigation",
+      "VPN Security",
+      "Threat Intelligence"
+    ],
+    "githubUrl": "https://github.com/phemiz/soc-incident-authentication-anomaly",
+    "images": ["/projects/soc-investigation.png"],
+    "features": [
+      {
+        "title": "Incident Timeline Re-construction",
+        "desc": "Mapping failed login attempts to successful compromise via Event IDs 4625 and 4624."
+      },
+      {
+        "title": "IP Reputation Analysis",
+        "desc": "Leveraged AbuseIPDB and Cisco Talos to identify malicious data-center infrastructure."
+      },
+      {
+        "title": "Vulnerability Analysis",
+        "desc": "Deep dive into CVE-2024-24919 impacts on VPN and Mobile Access blades."
+      }
+    ]
+  },
+  {
+    "id": "cyber-010",
+    "slug": "enterprise-siem-edr-wazuh",
+    "title": "Enterprise SIEM & EDR (Wazuh)",
+    "shortDesc": "Deployment of Wazuh OVA and agent-based security monitoring.",
+    "fullDesc": "Full deployment of Wazuh SIEM including Manager, Dashboard, and Indexer via OVA. Configured Wazuh agents for Windows and Linux endpoints to provide centralized security monitoring. Implemented Sysmon integration for deep behavioral visibility and FIM (File Integrity Monitoring) for sensitive system directories.",
+    "status": "completed",
+    "techStack": [
+      "Wazuh",
+      "Sysmon",
+      "EDR",
+      "SIEM",
+      "Windows/Linux Security",
+      "Behaviourial Monitoring"
+    ],
+    "githubUrl": "https://github.com/phemiz/enterprise-siem-edr-wazuh",
+    "images": ["/projects/wazuh-siem.png"],
+    "features": [
+      {
+        "title": "Multi-Endpoint Onboarding",
+        "desc": "Automated deployment of agents across heterogeneous networks (Windows/Linux/MacOS)."
+      },
+      {
+        "title": "Behavioral Visibility",
+        "desc": "Integration with Sysmon to track process creation, network connections, and file changes."
+      },
+      {
+        "title": "Log Centralization",
+        "desc": "Single-pane visibility into security alerts from all managed enterprise assets."
+      }
+    ]
+  },
+  {
+    "id": "cyber-011",
+    "slug": "web-attack-forensics",
+    "title": "Web Attack Forensic Investigation",
+    "shortDesc": "Manual analysis of SQLi, XSS, and LFI/RFI web attack logs.",
+    "fullDesc": "Forensic investigation of various web attack vectors as part of the LetsDefend challenge. Performed manual log analysis to identify malicious intentions behind SQL Injection payloads, Cross-Site Scripting (Reflected/Stored/DOM), and Local/Remote File Inclusion attempts. Mapped attacker activity to the Cyber Kill Chain model.",
+    "status": "completed",
+    "techStack": [
+      "DFIR",
+      "Log Forensics",
+      "OWASP Top 10",
+      "Cyber Kill Chain",
+      "Attack Pattern Analysis"
+    ],
+    "githubUrl": "https://github.com/phemiz/web-attack-forensics",
+    "images": [],
+    "features": [
+      {
+        "title": "Attack Payload Decoding",
+        "desc": "Manual de-obfuscation of malicious SQL and XSS strings to reveal attacker objectives."
+      },
+      {
+        "title": "Kill Chain Mapping",
+        "desc": "Categorizing web logs into Recon, Exploitation, and C2 phases of an intrusion."
+      },
+      {
+        "title": "Defensive Strategy Report",
+        "desc": "Recommending mitigations including prepared statements, CSP, and input validation"
+      }
+    ]
+  },
+  {
+    "id": "cyber-012",
+    "slug": "threat-hunting-phantom-goblin",
+    "title": "Threat Hunting: Phantom Goblin",
+    "shortDesc": "Case study and simulation of an advanced infostealer malware.",
+    "fullDesc": "Technical case study of 'Phantom Goblin', an infostealer targeting VSCode tunnels and browser credentials. Developed a Python-based simulation script to emulate the malware's TTPs (LNK execution, PowerShell delivery, exfiltration to Telegram). Created Sigma and Yara rules to detect initial access and persistence mechanisms.",
+    "status": "completed",
+    "techStack": [
+      "Malware Simulation",
+      "Python",
+      "Threat Hunting",
+      "Sigma Rules",
+      "Yara",
+      "IR Playbooks"
+    ],
+    "githubUrl": "https://github.com/phemiz/threat-hunting-phantom-goblin",
+    "images": ["/projects/malware-analysis-forensics-1775291339477.png"],
+    "features": [
+      {
+        "title": "Attack Emulation Script",
+        "desc": "Custom Python framework safely simulating a full malware lifecycle in test labs"
+      },
+      {
+        "title": "Detection Engineering",
+        "desc": "Creation of high-fidelity SIEM rules to flag PowerShell-based payload delivery."
+      },
+      {
+        "title": "IR Response Playbook",
+        "desc": "Developed systematic steps for containment if a Phantom Goblin infection is detected."
+      }
+    ]
+  },
+  {
+    "id": "cyber-013",
+    "slug": "network-traffic-vulnerability-assessment",
+    "title": "Network Traffic & Vulnerability Assessment",
+    "shortDesc": "Simulated network environment for threat monitoring and scanning.",
+    "fullDesc": "Created a virtualized enterprise network using VMware to simulate and analyze cyber attacks. Implemented a Financial Database Server, Employee Workstations, and an Attacker Node (Kali). Orchestrated phishing and malware simulations (EICAR, Abuse.ch samples) and monitored system/network responses using Wireshark and Sysinternals.",
+    "status": "completed",
+    "techStack": [
+      "VMware",
+      "Wireshark",
+      "Sysinternals",
+      "Kali Linux",
+      "Vulnerability Scanning",
+      "Traffic Analysis"
+    ],
+    "githubUrl": "https://github.com/phemiz/network-traffic-vulnerability-assessment",
+    "images": ["/projects/automated-patch-management-1775291253360.png"],
+    "features": [
+      {
+        "title": "Isolated Lab Orchestration",
+        "desc": "Designed a multi-VM environment for safe execution and analysis of malicious traffic."
+      },
+      {
+        "title": "Packet-Level Forensics",
+        "desc": "Leveraged Wireshark filters to identify C2 communication patterns and data exfiltration."
+      },
+      {
+        "title": "Endpoint Visibility",
+        "desc": "Used ProcMon and TcpView to track real-time system changes and suspicious connections."
+      }
+    ]
+  },
+  {
+    "id": "cyber-014",
+    "slug": "advanced-phishing-forensics",
+    "title": "Advanced Phishing Forensics",
+    "shortDesc": "Technical investigation of complex email-based threats.",
+    "fullDesc": "A deep-dive investigation into sophisticated phishing campaigns using Blue Team Labs Online challenges. Performed full email header analysis, Base64 decoding of malicious payloads with CyberChef, and URL forensics using PhishTool/URL2PNG. Successfully mapped originating IPs and identified credential harvesting infrastructures.",
+    "status": "completed",
+    "techStack": [
+      "Email Forensics",
+      "CyberChef",
+      "Header Analysis",
+      "PhishTool",
+      "Base64 Decoding",
+      "SOC Analysis"
+    ],
+    "githubUrl": "https://github.com/phemiz/advanced-phishing-forensics",
+    "images": [],
+    "features": [
+      {
+        "title": "Payload De-obfuscation",
+        "desc": "Decoding complex Base64 and XOR-encoded payloads to reveal malicious C2 URLs."
+      },
+      {
+        "title": "Mail Header Reconstruction",
+        "desc": "Tracing the true origin of spoofed emails through SMTP hop analysis and SPF/DKIM verification."
+      },
+      {
+        "title": "Visual Forensics",
+        "desc": "Safely capturing phishing site snapshots via URL2PNG to analyze visual deception techniques."
+      }
+    ]
   }
 ]

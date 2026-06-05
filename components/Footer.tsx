@@ -1,11 +1,22 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export function Footer() {
     return (
         <footer className="w-full bg-black py-12 px-6 md:px-12 border-t border-white/10 text-white/60">
             <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-12">
                 <div className="space-y-4 max-w-sm">
-                    <h3 className="text-xl font-bold text-white">Phemis Portfolio</h3>
+                    <div className="flex items-center gap-3">
+                        <div className="relative w-12 h-12 flex-shrink-0">
+                            <Image
+                                src="/cchsmt-logo.png"
+                                alt="CCHSMT Logo"
+                                fill
+                                className="object-contain"
+                            />
+                        </div>
+                        <h3 className="text-xl font-bold text-white">Phemis Portfolio</h3>
+                    </div>
                     <p className="text-sm leading-relaxed">
                         Senior SSD Software Architect & LLM Engineer.
                         Building the future of intelligent software.

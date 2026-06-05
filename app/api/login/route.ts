@@ -29,8 +29,25 @@ export async function POST(request: Request) {
             );
         }
 
-        // Compare password
-        const isPasswordValid = await bcrypt.compare(password, admin.password);
+        // Multi-stage password verification to handle legacy plaintext migration
+        let isPasswordValid = false;
+        if (admin.password === password) {
+            // Success with legacy plaintext - Auto-migrate to hash
+            const hashedPassword = await bcrypt.hash(password, 10);
+            await prisma.admin.update({
+                where: { id: admin.id },
+                data: { password: hashedPassword }
+            });
+            isPasswordValid = true;
+        } else {
+            // Standard bcrypt check for hashed passwords
+            try {
+                isPasswordValid = await bcrypt.compare(password, admin.password);
+            } catch (error) {
+                console.error("Bcrypt comparison failed (likely invalid hash):", error);
+                isPasswordValid = false;
+            }
+        }
 
         if (!isPasswordValid) {
             return NextResponse.json(

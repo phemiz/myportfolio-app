@@ -1,0 +1,18 @@
+{
+  "id": "252d838f-de86-4be1-877d-0795ce0ab015",
+  "slug": "naijadocs",
+  "title": "NaijaDocs",
+  "shortDesc": "NaijaDocs AI is a professional, mobile-first web application designed specifically for the Nigerian market. It empowers entrepreneurs, NGOs, and businesses to instantly generate formal, government-standard documents—such as Business Plans for BoI/GEEP grants, Tenancy Agreements for Lagos/Abuja, and CAC-compliant NGO Constitutions, using advanced AI",
+  "fullDesc": "NaijaDocs AI is a professional, mobile-first web application designed specifically for the Nigerian market. It empowers entrepreneurs, NGOs, and businesses to instantly generate formal, government-standard documents—such as Business Plans for BoI/GEEP grants, Tenancy Agreements for Lagos/Abuja, and CAC-compliant NGO Constitutions, using advanced AI",
+  "status": "in-progress",
+  "techStack": "[\"TypeScript\"]",
+  "llmMetadata": null,
+  "githubUrl": "https://github.com/phemiz/NaijaDocs",
+  "demoUrl": null,
+  "images": "[\"/projects/naijadocs-1773679128332-Gemini_Generated_Image_w3d4yww3d4yww3d4.png\"]",
+  "features": "[]",
+  "specs": "[]",
+  "readme": null,
+  "createdAt": "2026-03-16T16:37:58.135Z",
+  "updatedAt": "2026-03-17T08:35:31.435Z"
+}

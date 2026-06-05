@@ -74,19 +74,40 @@ export async function addProjectAction(formData: FormData) {
     const techStackString = formData.get('techStack') as string;
     const techStack = techStackString.split(',').map(t => t.trim()).filter(Boolean);
 
-    // Handle Image Upload
+    // 1. Handle Image Upload (with local fallback)
     const imageFile = formData.get('image') as File;
     let imagePath = '';
 
     if (imageFile && imageFile.size > 0) {
         try {
             const fileName = `${formData.get('slug')}-${Date.now()}-${imageFile.name}`;
-            const blob = await put(`projects/${fileName}`, imageFile, { access: 'public' });
-            imagePath = blob.url;
+            
+            // Check if Vercel Blob is configured, otherwise fallback to local
+            if (process.env.BLOB_READ_WRITE_TOKEN && process.env.BLOB_READ_WRITE_TOKEN !== 'your_vercel_blob_token_here') {
+                const blob = await put(`projects/${fileName}`, imageFile, { access: 'public' });
+                imagePath = blob.url;
+            } else {
+                // Local Fallback
+                const buffer = Buffer.from(await imageFile.arrayBuffer());
+                const uploadDir = path.join(process.cwd(), 'public/projects');
+                try { await fs.mkdir(uploadDir, { recursive: true }); } catch {}
+                await fs.writeFile(path.join(uploadDir, fileName), buffer);
+                imagePath = `/projects/${fileName}`;
+                console.log('Using local fallback for image upload:', imagePath);
+            }
         } catch (error) {
             console.error('Image upload failed:', error);
         }
     }
+
+    // 2. Determine Images (Manual Control Only)
+    // "the Project Feature Image should not be by default"
+    let images: string[] = [];
+    if (imagePath) {
+        images.push(imagePath);
+    }
+
+    const githubUrlFromForm = formData.get('githubUrl') as string;
 
     const newProject: Project = {
         id: crypto.randomUUID(),
@@ -96,15 +117,16 @@ export async function addProjectAction(formData: FormData) {
         fullDesc: formData.get('fullDesc') as string,
         status: formData.get('status') as any,
         techStack: techStack,
-        githubUrl: formData.get('githubUrl') as string,
-        images: imagePath ? [imagePath] : [],
-        features: [],
+        githubUrl: githubUrlFromForm,
+        demoUrl: formData.get('demoUrl') as string || undefined,
+        images: images,
+        features: JSON.parse(formData.get('featuresJson') as string || '[]'),
         specs: []
     };
 
     projects.push(newProject);
     await saveProjects(projects);
-    redirect('/admin');
+    redirect(`/admin?success=created#project-${newProject.id}`);
 }
 
 export async function deleteProjectAction(id: string) {
@@ -249,19 +271,62 @@ export async function updateProjectAction(id: string, formData: FormData) {
     const techStackString = formData.get('techStack') as string;
     const techStack = techStackString.split(',').map(t => t.trim()).filter(Boolean);
 
-    // Handle Image Upload
+    // 1. Handle Potential New Image Upload (with local fallback)
     const imageFile = formData.get('image') as File;
-    let imagePath = existingProject.images && existingProject.images.length > 0 ? existingProject.images[0] : '';
+    let newImagePath = '';
 
     if (imageFile && imageFile.size > 0) {
         try {
             const fileName = `${formData.get('slug')}-${Date.now()}-${imageFile.name}`;
-            const blob = await put(`projects/${fileName}`, imageFile, { access: 'public' });
-            imagePath = blob.url;
+            
+            if (process.env.BLOB_READ_WRITE_TOKEN && process.env.BLOB_READ_WRITE_TOKEN !== 'your_vercel_blob_token_here') {
+                const blob = await put(`projects/${fileName}`, imageFile, { access: 'public' });
+                newImagePath = blob.url;
+            } else {
+                // Local Fallback
+                const buffer = Buffer.from(await imageFile.arrayBuffer());
+                const uploadDir = path.join(process.cwd(), 'public/projects');
+                try { await fs.mkdir(uploadDir, { recursive: true }); } catch {}
+                await fs.writeFile(path.join(uploadDir, fileName), buffer);
+                newImagePath = `/projects/${fileName}`;
+                console.log('Using local fallback for image update:', newImagePath);
+            }
         } catch (error) {
             console.error('Image upload failed:', error);
         }
     }
+
+    // 2. Resolve Images
+    // Priority: 
+    // A. New local image (if present) becomes the Feature Image (index 0)
+    // B. Remaining existing images (respecting deletions from UI)
+    // Note: GitHub OG is no longer added by default.
+
+    let images: string[] = [];
+    const githubUrlFromForm = formData.get('githubUrl') as string;
+    
+    // A. Priority 1: New local image (if present)
+    if (newImagePath) {
+        images.push(newImagePath);
+    }
+
+    // C. Process Existing Images (Filtering based on UI deletions)
+    const existingImagesJson = formData.get('existingImagesJson') as string;
+    let baseImages = existingProject.images || [];
+    
+    if (existingImagesJson) {
+        try {
+            baseImages = JSON.parse(existingImagesJson);
+        } catch (e) {
+            console.error("Failed to parse remaining images:", e);
+        }
+    }
+
+    baseImages.forEach(img => {
+        if (!images.includes(img)) {
+            images.push(img);
+        }
+    });
 
     const updatedProject: Project = {
         ...existingProject,
@@ -271,13 +336,15 @@ export async function updateProjectAction(id: string, formData: FormData) {
         fullDesc: formData.get('fullDesc') as string,
         status: formData.get('status') as any,
         techStack: techStack,
-        githubUrl: formData.get('githubUrl') as string,
-        images: imagePath ? [imagePath] : [],
+        githubUrl: githubUrlFromForm,
+        demoUrl: formData.get('demoUrl') as string || undefined,
+        images: images,
+        features: JSON.parse(formData.get('featuresJson') as string || '[]')
     };
 
     projects[existingProjectIndex] = updatedProject;
     await saveProjects(projects);
-    redirect('/admin');
+    redirect(`/admin?success=updated#project-${id}`);
 }
 
 export async function sendEmailAction(prevState: any, formData: FormData) {

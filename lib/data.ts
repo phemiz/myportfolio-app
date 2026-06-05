@@ -86,7 +86,7 @@ export const projects: Project[] = [
 export const personalInfo = {
     name: "Phemiz",
     role: "Senior SSD & LLM Architect",
-    bio: "I build high-performance, intelligent applications that bridge the gap between traditional software engineering and modern AI capabilities. Creator of Axiom AI and Aegis MCP systems.",
+    bio: "I architect high-performance, intelligent ecosystems that bridge the gap between complex software engineering and state-of-the-art AI capabilities. As an agency owner and developer, I focus on building scalable, ‘Mobile-First’ tactical solutions that solve real-world business challenges in the Nigerian and global markets.",
     socials: {
         github: "https://github.com/phemiz",
         twitter: "https://x.com/femi544601",

@@ -24,7 +24,7 @@ export async function middleware(request: NextRequest) {
     // 3. Redirect logged-in users away from /login or /admin/login to /dashboard
     if (pathname === '/login' || pathname === '/admin/login') {
         if (isValidToken) {
-            return NextResponse.redirect(new URL('/dashboard', request.url));
+            return NextResponse.redirect(new URL('/admin', request.url));
         }
     }
 
